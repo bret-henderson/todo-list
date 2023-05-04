@@ -7,6 +7,158 @@
 
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  background-color: #e2e8f0;
+  background-color: #f5f6f8;
+}
+
+header {
+  background-color: white;
+  font-size: 2rem;
+  padding: 32px 16px;
+  box-shadow: 0 4px 2px -2px rgb(0 0 0 / 15%);
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+main{
   padding: 16px;
+}
+
+.header-container {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.project {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.project:hover {
+  background-color: #c4c7cf;
+}
+
+.current-project {
+  background-color: #e1e3e8;
+}
+
+button {
+  display: block;
+  padding: 4px 8px;
+  font-size: 1rem;
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1px);
+}
+
+.popup-container>form {
+  position: relative;
+  padding: 32px 16px 8px;
+  margin: 128px 32px 0px 32px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  background-color: white;
+  width: 100%;
+  max-width: 512px;
+  height: fit-content;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-row input {
+  flex: auto;
+  text-align: left;
+  border: 1px solid #D6D9DC;
+  border-radius: 3px;
+  max-width: 400px;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.form-row > select {
+  font-size: 1rem;
+}
+
+.form-row label {
+  text-align: right;
+  width: 104px;
+  padding-right: 16px;
+}
+
+.checkbox-container {
+  display: flex;
+}
+
+.form-row button {
+  margin-left: 104px;
+}
+
+.close-popup {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  cursor: pointer;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 320px));
+  width: 100%;
+  height: fit-content;
+  gap: 32px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  max-width: 400px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  height: fit-content;
+}
+
+.completed-todo {
+  color: grey;
+}
+
+@media only screen and (min-width: 850px) {
+
+  main {
+    display: flex;
+    gap: 16px;
+  }
+
+  .banner {
+    top: 33%;
+  }
+
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    height: initial;
+    min-height: 100vh;
+    min-width: 264px;
+    max-width: 264px;
+  }
+
 }
