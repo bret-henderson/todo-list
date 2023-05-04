@@ -25,13 +25,19 @@ const todoFactory = (title, description, dueDate, priority, project, done) => {
   return { title, description, dueDate, priority, project, done };
 };
 
+// Add todo
 function openForm() {
   popup.style.display = 'flex';
 }
 
+addTodoBtn.addEventListener('click', () => openForm());
+
+// Add project
 function openProjForm() {
   popupProj.style.display = 'flex';
 }
+
+newProjBtn.addEventListener('click', () => openProjForm());
 
 // Delete project
 deleteProjBtn.addEventListener('click', () => {
@@ -47,12 +53,6 @@ deleteProjBtn.addEventListener('click', () => {
   const projToSelect = document.querySelector('.project');
   selectProject(projToSelect);
 });
-
-// Add todo
-addTodoBtn.addEventListener('click', () => openForm());
-
-// Add project
-newProjBtn.addEventListener('click', () => openProjForm());
 
 // Close todo popup if clicked outside
 popup.addEventListener('click', (e) => {
@@ -103,6 +103,26 @@ function submitTodoForm(formData) {
   domFuncs.addTodoList(newTodo);
 }
 
+// Remove to do
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('.remove-todo'); // Or any other selector.
+  const currentProj = document.querySelector('.current-project');
+  console.log(currentProj.children[0].textContent);
+  if (target) {
+    const index = masterList.findIndex(
+      (masterProj) =>
+        masterProj.projName === currentProj.children[0].textContent
+    );
+    const index2 = Array.prototype.indexOf.call(
+      target.parentElement.parentElement.children,
+      target.parentElement
+    );
+    console.log(masterList[index]);
+    masterList[index].todos.splice(index2, 1);
+    target.parentElement.remove();
+  }
+});
+
 // Project form
 function submitProjForm(formData) {
   const formDataObj = Object.fromEntries(formData);
@@ -134,19 +154,6 @@ newProjForm.addEventListener('submit', (e) => {
   popupProj.style.display = 'none';
   submitProjForm(getData(e.target));
   e.target.reset();
-});
-
-// Remove to do
-document.addEventListener('click', (e) => {
-  const target = e.target.closest('.remove-todo'); // Or any other selector.
-  if (target) {
-    const index = Array.prototype.indexOf.call(
-      target.parentElement.parentElement.children,
-      target.parentElement
-    );
-    masterList.splice(index, 1);
-    target.parentElement.remove();
-  }
 });
 
 // Done checkbox
