@@ -3,16 +3,23 @@ import './style.css';
 import Icon from '../images/close_FILL0_wght400_GRAD0_opsz48.png';
 
 const addTodoBtn = document.querySelector('.new-todo');
-const popup = document.querySelector('.popup-container');
-const projPopup = document.querySelector('.popup-container-proj');
-const closePopup = document.querySelector('.close-popup');
-closePopup.src = Icon;
+const popup = document.querySelector('.popup-container.todo');
+const popupProj = document.querySelector('.popup-container.proj');
+const closePopup = document.querySelectorAll('.close-popup');
+closePopup.forEach((popup) => {
+  popup.src = Icon;
+});
 const newTodoForm = document.querySelector('.new-todo-form');
 const newProjForm = document.querySelector('.new-proj-form');
 const deleteProjBtn = document.querySelector('.delete-project');
 const newProjBtn = document.querySelector('.new-project');
 
 let masterList = [];
+
+function createNewProject(name) {
+  masterList.push({ projName: name, todos: [] });
+  domFuncs.addProject(name);
+}
 
 const todoFactory = (title, description, dueDate, priority, project, done) => {
   return { title, description, dueDate, priority, project, done };
@@ -23,17 +30,8 @@ function openForm() {
 }
 
 function openProjForm() {
-  projPopup.style.display = 'flex';
+  popupProj.style.display = 'flex';
 }
-
-// New project
-newProjBtn.addEventListener('click', () => {
-  const projToAdd = document.querySelector('.current-project');
-
-  domFuncs.clearAllCards();
-  const projToSelect = document.querySelector('.project');
-  selectProject(projToSelect);
-});
 
 // Delete project
 deleteProjBtn.addEventListener('click', () => {
@@ -56,22 +54,38 @@ addTodoBtn.addEventListener('click', () => openForm());
 // Add project
 newProjBtn.addEventListener('click', () => openProjForm());
 
+// Close todo popup if clicked outside
 popup.addEventListener('click', (e) => {
+  console.log(e.target);
   if (
-    e.target.className === 'popup-container' ||
+    e.target.classList.contains('popup-container') ||
     e.target.classList.contains('close-popup')
   ) {
     popup.style.display = 'none';
   }
 });
 
+// Close project popup if clicked outside
+popupProj.addEventListener('click', (e) => {
+  console.log(e.target.className);
+  if (
+    e.target.classList.contains('popup-container') ||
+    e.target.classList.contains('close-popup')
+  ) {
+    popupProj.style.display = 'none';
+  }
+});
+
+// Close popup on 'escape' press
 document.onkeydown = (e) => {
   if (e.key === 'Escape') {
     popup.style.display = 'none';
+    popupProj.style.display = 'none';
   }
 };
 
-function submitForm(formData) {
+// To do form
+function submitTodoForm(formData) {
   const formDataObj = Object.fromEntries(formData);
   const projectSelected = document.querySelector('.current-project');
   const newTodo = todoFactory(
@@ -86,21 +100,39 @@ function submitForm(formData) {
   );
   console.log(index);
   masterList[index].todos.push(newTodo);
-  // console.log(item);
-  //push(newTodo);
   domFuncs.addTodoList(newTodo);
+}
+
+// Project form
+function submitProjForm(formData) {
+  const formDataObj = Object.fromEntries(formData);
+  const newProjName = formDataObj['project-name'];
+  createNewProject(newProjName);
+  const projToSelect = document.querySelector('.header-container').lastChild;
+  selectProject(projToSelect);
 }
 
 function getData(form) {
   const formData = new FormData(form);
-  submitForm(formData);
+  return formData;
 }
 
-// Submit form
+// Submit new todo form
 newTodoForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  getData(e.target);
+  // getData(e.target);
+  submitTodoForm(getData(e.target));
   popup.style.display = 'none';
+  e.target.reset();
+});
+
+// Submit new project form
+newProjForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // getData(e.target);
+  domFuncs.clearAllCards();
+  popupProj.style.display = 'none';
+  submitProjForm(getData(e.target));
   e.target.reset();
 });
 
@@ -187,25 +219,22 @@ const sampleTodo2 = todoFactory(
   false
 );
 
-function newProject(name) {
-  masterList.push({ projName: name, todos: [] });
-  domFuncs.addProject(name);
-}
-
-newProject('Personal');
-newProject('Work');
-newProject('Test Proj');
+createNewProject('Personal');
+createNewProject('Work');
+createNewProject('Test Proj');
 
 const defaultProj = document.querySelector('.project');
 defaultProj.classList.add('current-project');
 
 function selectProject(selectedProj) {
+  const projects = document.querySelectorAll('.project');
+  projects.forEach((proj) => {
+    proj.classList.remove('current-project');
+  });
   selectedProj.classList.add('current-project');
-  console.log(selectedProj);
   const index = masterList.findIndex(
     (proj) => proj.projName === selectedProj.children[0].textContent
   );
-  console.log(masterList[index]);
   masterList[index].todos.forEach((todo) => {
     domFuncs.addTodoList(todo);
   });
