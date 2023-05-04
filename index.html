@@ -6,8 +6,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="main.js" defer></script>
+  <link rel="shortcut icon" href="#">
 </head>
 <body>
-  <h1>To Do List</h1>
+    <header>
+      <span>To Do Lists</span>
+      <div class="button-container">
+        <button class="new-todo">Add To Do</button>
+      </div>
+    </header>
+    <main>
+      <div class="header-container">
+        <div class="project current-project">
+          <h1>Personal</h1>
+        </div>
+        <div class="project">
+          <h1>Work</h1>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <!-- <div class="card">
+          <input type="checkbox" name="done-checkbox" id="done-checkbox">
+          <h2 class="title">Go to gym</h2>
+          <div class="description">Workout after work</div>
+          <div class="due-date">Due Date: 34343</div>
+          <h2 class="priority">Priority: low</h2><button class="remove-todo">Remove To Do</button>
+        </div> -->
+      </div>
+      <div class="popup-container" style="display: none;">
+        <form action="" method="get" class="new-todo-form">
+          <img class="close-popup" src="#" alt="close">
+          <div class="form-row">
+            <label for="title">Title</label>
+            <input id="title" name="title" type="text" required>
+          </div>
+          <div class="form-row">
+            <label for="description">Description</label>
+            <input id="description" name="description" type="text" required>
+          </div>
+          <div class="form-row">
+            <label for="due-date">Due Date</label>
+            <input id="due-date" name="due-date" type="number" min="1" required>
+          </div>
+          <div class="form-row">
+            <label for="priority">Priority</label>
+            <select id='priority' name='priority'>
+              <option value='low'>Low</option>
+              <option value='medium'>Medium</option>
+              <option value='high'>High</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+
+    </main>
 </body>
 </html>
