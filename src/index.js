@@ -54,8 +54,8 @@ function selectProject(selectedProj) {
 
 // Project form
 function submitProjForm(formData) {
-  const formDataObj = Object.fromEntries(formData);
-  const newProjName = formDataObj['project-name'];
+  // const formDataObj = Object.fromEntries(formData);
+  const newProjName = formData['project-name'];
   createNewProject(newProjName, []);
   const projToSelect = document.querySelector('.header-container').lastChild;
   selectProject(projToSelect);
