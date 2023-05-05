@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const cardContainer = document.querySelector('.card-container');
 const headerContainer = document.querySelector('.header-container');
 
@@ -27,10 +29,10 @@ function addTodoList(newTodo) {
 
   const dueDate = document.createElement('div');
   dueDate.classList.add('due-date');
-  dueDate.textContent = `Due Date: ${newTodo.dueDate}`;
+  dueDate.textContent = `Due: ${newTodo.dueDate}`;
   card.appendChild(dueDate);
 
-  const priority = document.createElement('h2');
+  const priority = document.createElement('div');
   priority.classList.add('priority');
   priority.textContent = `Priority: ${newTodo.priority}`;
   card.appendChild(priority);
@@ -38,6 +40,7 @@ function addTodoList(newTodo) {
   const removeTodoBtn = document.createElement('button');
   removeTodoBtn.classList.add('remove-todo');
   removeTodoBtn.textContent = 'Remove To Do';
+  if (done.checked === true) removeTodoBtn.classList.add('completed-todo');
   card.appendChild(removeTodoBtn);
 }
 
