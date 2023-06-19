@@ -148,15 +148,10 @@ button {
     gap: 16px;
   }
 
-  .banner {
-    top: 33%;
-  }
-
   .header-container {
     display: flex;
     flex-direction: column;
     height: initial;
-    min-height: 100vh;
     min-width: 264px;
     max-width: 264px;
   }
